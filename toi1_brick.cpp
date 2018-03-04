@@ -27,7 +27,7 @@ int main()
             f++;
             if(f>=m) break;
         }
-        if(f==m) continue;
+        //if(f==m) continue;
         int x = f-1,cn = 0;
         while(true)
         {
