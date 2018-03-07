@@ -28,7 +28,7 @@ void bfs(int x,int y)
             if(ai<0 or ai>=n or aj<0 or aj>=n) continue;
             if(a[ai][aj]!=a[x][y]) continue;
             if(visited[ai][aj]) continue;
-            di.push_back({ai,aj});
+            di.push_back({i,j});
             q.push({ai,aj});
             visited[ai][aj] = true;
         }
