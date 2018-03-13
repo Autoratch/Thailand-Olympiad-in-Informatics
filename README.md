@@ -1,1 +1,1 @@
-This is a personal repository.
+This is a personal private repository.
