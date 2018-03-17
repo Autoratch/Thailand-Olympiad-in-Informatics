@@ -6,7 +6,7 @@ using namespace std;
 string t,p;
 vector<int> a,ans;
 
-int kmp()
+void kmp()
 {
     int i = 0,j = 0;
     while(i<t.length())
