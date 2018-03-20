@@ -40,9 +40,12 @@ int main()
         if(i==0) continue;
         for(int j = 0;j < n;j++) cin >> a[i][j];
     }
-    for(int i = 0;i < n;i++) if(!a[m][i]) e = i;
 
-    solve(0,e);
+    vector<int> ae;
+
+    for(int i = 0;i < n;i++) if(!a[m][i]) ae.push_back(i);
+
+    for(int i = 0;i < ae.size();i++){ solve(0,ae[i]); if(fin) break; ans.clear(); }
 
     int idx = s;
 
