@@ -23,7 +23,7 @@ int main()
     sort(a.begin(),a.end());
     reverse(a.begin(),a.end());
 
-    int p = 0,mxp = 0,mxa = 0;
+    int p = 0,mxc = 0,mxa = 0;
 
     for(int i = 0;i < n;i++)
     {
@@ -31,17 +31,17 @@ int main()
         if(i==0)
         {
             p = a[i].first;
-            mxp = a[i].second;
+            mxc = a[i].second;
         }
         else
         {
-            if(a[i].first==p){ if(mxa>a[i].second) ok = false; mxp = max(mxp,a[i].second); }
+            if(a[i].first==p){ if(mxa>a[i].second) ok = false; mxc = max(mxc,a[i].second); }
             else
             {
                 p = a[i].first;
-                if(mxp>a[i].second) ok = false;
-                mxp = max(mxp,a[i].second);
-                mxa = mxp;
+                mxa = max(mxa,mxc);
+                if(mxa>a[i].second) ok = false;
+                mxc = a[i].second;
             }
         }
         if(ok) cout << a[i].first << ' ' << a[i].second << endl;
