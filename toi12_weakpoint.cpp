@@ -3,33 +3,41 @@ using namespace std;
 #define endl '\n'
 #define MOD 1e9 + 7
 
-int n,k;
+int n,k,st;
 vector<vector<int> > adj;
 vector<int> cycle;
 vector<bool> incy;
-vector<bool> visited;
-bool fic,cy;
+vector<bool> visited,visit;
+bool fic,cy,fin;
 
-void findcycle(vector<int> b,int p,int pr)
+bool findcycle(int p,int pr)
 {
-    vector<bool> visited(n);
-    for(int i = 0;i < b.size();i++) visited[b[i]] = true;
-    b.push_back(p);
+    vector<bool> visited = visit;
+    visited[p] = true;
+    visit[p] = true;
     for(int i = 0;i < adj[p].size();i++)
     {
-        if(!visited[adj[p][i]]){ findcycle(b,adj[p][i],p); if(fic) return; }
+        if(!visited[adj[p][i]])
+        {
+            if(findcycle(adj[p][i],p))
+            {
+                if(adj[p][i]==st or fin){ fin = true; return true; }
+                else{ cycle.push_back(adj[p][i]); incy[adj[p][i]] = true; return true; }
+            }
+            else if(fin or fic) return false;
+        }
         else if(pr==p) continue;
         else if(adj[p][i]!=pr)
         {
-            for(int j = b.size()-1;j >= 0;j--)
-            {
-                cycle.push_back(b[j]);
-                incy[b[j]] = true;
-                if(b[j]==k) cy = true;
-                if(b[j]==adj[p][i]){ fic = true; return; }
-            }
+            fic = true;
+            st = adj[p][i];
+            cycle.push_back(st);
+            if(st==k) cy = true;
+            incy[st] = true;
+            return true;
         }
     }
+    return false;
 }
 
 int solve1(int x)
@@ -88,7 +96,7 @@ int main()
 
     cin >> n >> k;
 
-    adj.resize(n); incy.resize(n); visited.resize(n);
+    adj.resize(n); incy.resize(n); visited.resize(n); visit.resize(n);
     k--;
     for(int i = 0;i < n;i++)
     {
@@ -99,9 +107,7 @@ int main()
         adj[b].push_back(a);
     }
 
-    vector<int> tm;
-
-    findcycle(tm,k,k);
+    findcycle(k,k);
 
     int mx = 0,idx = INT_MAX;
 
