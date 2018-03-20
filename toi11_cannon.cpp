@@ -16,24 +16,21 @@ int main()
 
     for(int i = 0;i < n;i++) cin >> a[i];
 
+
     while(q--)
     {
         int cnt = 0;
         ans.assign(n,false);
+        auto lo = lower_bound(a.begin(),a.end(),0);
+        auto up = a.begin();
         for(int i = 0;i < m;i++)
         {
             int x;
             cin >> x;
-            auto lo = lower_bound(a.begin(),a.end(),x-l);
-            auto up = upper_bound(a.begin(),a.end(),x+l);
+            lo = lower_bound(up,a.end(),x-l);
+            up = upper_bound(up,a.end(),x+l);
             if(lo==a.end()) continue;
-            if(*lo<x-l) lo++;
-//            cout << *lo << ' ' << *up << endl;
-            for(auto it = lo;it != up;it++)
-            {
-                if(!ans[it-a.begin()]) cnt++;
-                ans[it-a.begin()] = true;
-            }
+            cnt+=(up-lo);
         }
         cout << cnt << endl;
     }
