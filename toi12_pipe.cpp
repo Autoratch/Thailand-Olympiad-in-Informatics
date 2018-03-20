@@ -12,32 +12,35 @@ int main()
 
     cin >> n >> k;
 
-    vector<int> x(n),y(n);
-    vector<bool> visited(n,false);
-    priority_queue<int,vector<int>,greater<int> > ans;
-    priority_queue<pii,vector<pii>,greater<pii> > q;
+    vector<int> x(n),y(n),a(n,INT_MAX);
+    vector<int> ans;
 
     for(int i = 0;i < n;i++) cin >> x[i] >> y[i];
 
-    q.push({0,0});
+    int p = 0;
 
-    while(!q.empty())
+    while(true)
     {
-        int w = q.top().first,p = q.top().second;
-        q.pop();
-        if(visited[p]) continue;
-        visited[p] = true;
-        if(w) ans.push(w);
+        int mn = INT_MAX,idx = -1;
+        a[p] = -1;
         for(int i = 0;i < n;i++)
         {
-            if(visited[i]) continue;
-            q.push({abs(x[p]-x[i])+abs(y[p]-y[i]),i});
+            if(a[i]==-1) continue;
+            a[i] = min(a[i],abs(x[p]-x[i])+abs(y[p]-y[i]));
+            if(mn>a[i]){ mn = a[i]; idx = i; }
         }
+        if(idx==-1) break;
+//        cout << p << ' ' << mn << endl;
+        p = idx;
+        ans.push_back(mn);
     }
 
     int cnt = 0;
 
-    for(int i = k;i < n;i++){ cnt+=ans.top(); ans.pop(); }
+    sort(ans.begin(),ans.end());
+    reverse(ans.begin(),ans.end());
+
+    for(int i = k-1;i < n-1;i++) cnt+=ans[i];
 
     cout << cnt;
 }
