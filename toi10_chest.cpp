@@ -62,23 +62,35 @@ int main()
     long long mx = 1;
     int cnt = 0;
 
-    for(int i = 0;i < n;i++)
+    int p2,p3,p5,p7;
+
+    while(true)
     {
-        auto it22 = it2; it22++;
-        if(it22->first==i) it2++;
-        auto it33 = it3; it33++;
-        if(it33->first==i) it3++;
-        auto it55 = it5; it55++;
-        if(it55->first==i) it5++;
-        auto it77 = it7; it77++;
-        if(it77->first==i) it7++;
+        if(!(it2->first!=n or it3->first!=n or it5->first!=n or it7->first!=n)) break;
+        auto it22 = it2;
+        auto it33 = it3;
+        auto it55 = it5;
+        auto it77 = it7;
+        int mn = INT_MAX,mn2 = INT_MAX;
         long long ea = 1;
-        ea*=((it2->second)+1);
-        ea*=((it3->second)+1);
-        ea*=((it5->second)+1);
-        ea*=((it7->second)+1);
-        if(ea>mx){ mx = ea; cnt = 1; }
-        else if(ea==mx) cnt++;
+        mn = min(mn,it2->first);
+        mn = min(mn,it3->first);
+        mn = min(mn,it5->first);
+        mn = min(mn,it7->first);
+        if(mn==it2->first){ ea*=((it2->second)+1); p2 = it2->second; it2++; it22++; }
+        else ea*=(p2+1);
+        if(mn==it3->first){ ea*=((it3->second)+1); p3 = it3->second; it3++; it33++; }
+        else ea*=(p3+1);
+        if(mn==it5->first){ ea*=((it5->second)+1); p5 = it5->second; it5++; it55++; }
+        else ea*=(p5+1);
+        if(mn==it7->first){ ea*=((it7->second)+1); p7 = it7->second; it7++; it77++; }
+        else ea*=(p7+1);
+        mn2 = min(mn2,it22->first);
+        mn2 = min(mn2,it33->first);
+        mn2 = min(mn2,it55->first);
+        mn2 = min(mn2,it77->first);
+        if(ea>mx){ mx = ea; cnt = mn2-mn; }
+        else if(ea==mx) cnt+=mn2-mn;
     }
 
     cout << mx << ' ' << cnt;
