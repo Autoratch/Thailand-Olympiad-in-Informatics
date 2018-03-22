@@ -1,4 +1,9 @@
-#include <bits/stdc++.h>
+#include <vector>
+#include <queue>
+#include <iostream>
+#include <limits.h>
+#include <algorithm>
+
 using namespace std;
 #define endl '\n'
 #define MOD 1e9 + 7
@@ -12,12 +17,10 @@ bool fic,cy,fin;
 
 bool findcycle(int p,int pr)
 {
-    vector<bool> visited = visit;
-    visited[p] = true;
     visit[p] = true;
     for(int i = 0;i < adj[p].size();i++)
     {
-        if(!visited[adj[p][i]])
+        if(!visit[adj[p][i]])
         {
             if(findcycle(adj[p][i],p))
             {
@@ -131,7 +134,7 @@ int main()
             if(tmp>mx)
             {
                 mx = tmp;
-                idx = adj[k][i];
+                idx = cycle[i];
             }
             else if(tmp==mx) idx = min(idx,cycle[i]);
         }
@@ -150,5 +153,5 @@ int main()
         }
     }
 
-    cout << idx+1 << endl << mx;
+    cout << idx+1 << endl << mx << endl;
 }
