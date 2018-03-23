@@ -8,8 +8,10 @@ int m,n,q;
 
 void update(int x,int y,int val)
 {
+    int i = x,j = y;
     while(x<=m)
     {
+        y = j;
         while(y<=n)
         {
             a[x][y]+=val;
@@ -21,9 +23,10 @@ void update(int x,int y,int val)
 
 int read(int x,int y)
 {
-    int val = 0;
+    int val = 0,i = x,j = y;
     while(x>0)
     {
+        y = j;
         while(y>0)
         {
             val+=a[x][y];
@@ -41,8 +44,8 @@ int main()
     cin >> m >> n >> q;
 
     a.resize(m+1);
-    a[0].resize(n+1);
 
+    for(int i = 0;i <= m;i++) a[i].resize(n+1);
     for(int i = 1;i <= m;i++)
     {
         a[i].resize(n+1);
