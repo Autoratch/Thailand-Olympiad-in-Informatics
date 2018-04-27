@@ -12,7 +12,6 @@ void cr(int idx,int l,int r)
     cr(idx*2+1,l,mid);
     cr(idx*2+2,mid+1,r);
     s[idx] = max(s[idx*2+1],s[idx*2+2]);
-    cout << idx << ' ' << s[idx] << ' ' <<  l << ' ' <<  r << endl;
 }
 
 int val(int idx,int l,int r)
