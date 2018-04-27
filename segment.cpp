@@ -3,7 +3,7 @@ using namespace std;
 #define MOD 1e9 + 7
 #define endl '\n'
 
-int a[100000],s[300005],ll,rr;
+int a[100000],s[300005],ll,rr,id,va;
 
 void cr(int idx,int l,int r)
 {
@@ -12,6 +12,18 @@ void cr(int idx,int l,int r)
     cr(idx*2+1,l,mid);
     cr(idx*2+2,mid+1,r);
     s[idx] = max(s[idx*2+1],s[idx*2+2]);
+}
+
+void update(int idx,int l,int r)
+{
+    if(l==r) s[idx] = va;
+    else
+    {
+        int mid = (l+r)/2;
+        if(id<=mid) update(idx*2+1,l,mid);
+        else update(idx*2+2,mid+1,r);
+        s[idx] = max(s[idx*2+1],s[idx*2+2]);
+    }
 }
 
 int val(int idx,int l,int r)
@@ -35,9 +47,20 @@ int main()
     for(int i = 0;i < n;i++) cin >> a[i];
 
     cr(0,0,n-1);
+
     while(q--)
     {
-        cin >> ll >> rr;
-        cout << val(0,0,n-1) << endl;
+        char c;
+        cin >> c;
+        if(c=='P')
+        {
+            cin >> ll >> rr;
+            cout << val(0,0,n-1);
+        }
+        else
+        {
+            cin >> id >> va;
+            update(0,0,n-1);
+        }
     }
 }
