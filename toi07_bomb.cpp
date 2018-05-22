@@ -11,39 +11,18 @@ int main()
 
     cin >> n;
 
-    vector<pair<int,int> > a(n);
+    pair<int,int> a[n];
+
+    for(int i = 0;i < n;i++) cin >> a[i].first >> a[i].second;
+    sort(a,a+n);
+    reverse(a,a+n);
+
+    int all = 0,ex = 0,p = -1;
 
     for(int i = 0;i < n;i++)
     {
-        int x,y;
-        cin >> x >> y;
-        a[i] = {x,y};
-    }
-
-    sort(a.begin(),a.end());
-    reverse(a.begin(),a.end());
-
-    int p = 0,mxc = 0,mxa = 0;
-
-    for(int i = 0;i < n;i++)
-    {
-        bool ok = true;
-        if(i==0)
-        {
-            p = a[i].first;
-            mxc = a[i].second;
-        }
-        else
-        {
-            if(a[i].first==p){ if(mxa>a[i].second) ok = false; mxc = max(mxc,a[i].second); }
-            else
-            {
-                p = a[i].first;
-                mxa = max(mxa,mxc);
-                if(mxa>a[i].second) ok = false;
-                mxc = a[i].second;
-            }
-        }
-        if(ok) cout << a[i].first << ' ' << a[i].second << endl;
+        if(a[i].first!=p){ ex = all; p = a[i].first; }
+        if(ex<=a[i].second) cout << a[i].first << ' ' << a[i].second << endl;
+        all = max(all,a[i].second);
     }
 }
