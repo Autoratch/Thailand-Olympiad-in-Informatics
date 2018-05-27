@@ -7,22 +7,17 @@ int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0);
 
-    int n,m,q,l;
+    int n,m,k,l;
 
-    cin >> n >> m >> q >> l;
+    cin >> n >> m >> k >> l;
 
     vector<int> a(n);
-    vector<bool> ans;
 
     for(int i = 0;i < n;i++) cin >> a[i];
-
-
-    while(q--)
+    while(k--)
     {
-        int cnt = 0;
-        ans.assign(n,false);
-        auto lo = lower_bound(a.begin(),a.end(),0);
-        auto up = a.begin();
+        auto lo = a.begin(),lo = a.begin();
+        int ans = 0;
         for(int i = 0;i < m;i++)
         {
             int x;
@@ -30,8 +25,8 @@ int main()
             lo = lower_bound(up,a.end(),x-l);
             up = upper_bound(up,a.end(),x+l);
             if(lo==a.end()) continue;
-            cnt+=(up-lo);
+            ans+=(up-lo);
         }
-        cout << cnt << endl;
+        cout << ans << endl;
     }
 }
