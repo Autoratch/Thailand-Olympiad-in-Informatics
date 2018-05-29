@@ -16,7 +16,7 @@ int main()
     for(int i = 0;i < n;i++) cin >> a[i];
     while(k--)
     {
-        auto lo = a.begin(),lo = a.begin();
+        auto lo = a.begin(),up = a.begin();
         int ans = 0;
         for(int i = 0;i < m;i++)
         {
