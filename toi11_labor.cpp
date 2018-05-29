@@ -1,28 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define MOD 1e9 + 7
 #define endl '\n'
+#define MOD 1e9 + 7
+
+long long n,m;
+long long k,l,r = INT_MAX,cnt;
+vector<int> a;
 
 int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0);
 
-    int n;
-    long long l = 0,r = INT_MAX,k;
-
     cin >> n >> k;
 
-    vector<long long> a(n);
-
-    for(int i = 0;i < n;i++){ cin >> a[i]; r = min(r,a[i]); }
+    a.resize(n);
+    for(int i = 0;i < n;i++)
+    {
+        cin >> a[i];
+        if(a[i]<r) r = a[i];
+    }
     r*=k;
 
     while(l<r)
     {
-        long long m = (l+r)/2,x = 0;
-        for(int i = 0;i < n;i++) x+=(m/a[i]);
-        if(x<k) l = m+1;
-        else r = m;
+        m = (l/2+r/2);
+        if(l%2 and r%2) m++;
+        cnt = 0;
+        for(int i = 0;i < n;i++) cnt+=m/a[i];
+        if(cnt>=k) r = m;
+        else l = m+1;
     }
 
     cout << l;
