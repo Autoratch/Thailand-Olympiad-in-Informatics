@@ -2,43 +2,50 @@
 using namespace std;
 #define endl '\n'
 #define MOD 1e9 + 7
+#define pii pair<int,pair<int,int> >
+
+int n,m;
+vector<int> pa;
+priority_queue<pii> q;
+
+int root(int x)
+{
+    if(pa[x]==x) return x;
+    else return pa[x] = root(pa[x]);
+}
+
+void kruskal()
+{
+    long long ans = 0;
+
+    pa.resize(n);
+    for(int i = 0;i < n;i++) pa[i] = i;
+
+    while(!q.empty())
+    {
+        int w = q.top().first;
+        int x = q.top().second.first,y = q.top().second.second;
+        q.pop();
+        if(root(x)==root(y)) continue;
+        ans+=w;
+        pa[root(x)] = pa[root(y)];
+    }
+
+    cout << ans;
+}
 
 int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0);
 
-    int n,m;
-
     cin >> n >> m;
-
-    vector<vector<pair<int,int> > > adj(n);
 
     for(int i = 0;i < m;i++)
     {
         int a,b,d;
         cin >> a >> b >> d;
-        a--; b--; d--;
-        adj[a].push_back({d,b});
-        adj[b].push_back({d,a});
+        q.push({d-1,{a-1,b-1}});
     }
 
-    priority_queue<pair<int,int> > q;
-
-    q.push({0,0});
-
-    long long ans = 0;
-
-    vector<bool> visited(n,false);
-
-    while(!q.empty())
-    {
-        int p = q.top().second,w = q.top().first;
-        q.pop();
-        if(visited[p]) continue;
-        visited[p] = true;
-        ans+=w;
-        for(int i = 0;i < adj[p].size();i++) if(!visited[adj[p][i].second]) q.push(adj[p][i]);
-    }
-
-    cout << ans;
+    kruskal();
 }
