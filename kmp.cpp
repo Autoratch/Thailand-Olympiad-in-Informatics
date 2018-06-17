@@ -26,7 +26,6 @@ void crtable()
     int len = 0,i = 1;
 
     a.resize(p.length());
-    a[0] = 0;
 
     while(i<p.length())
     {
