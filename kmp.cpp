@@ -1,43 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define endl '\n'
-#define MOD 1e9 + 7
 
-string t,p;
-vector<int> a,ans;
+const int N = 1e5;
 
-void kmp()
+string p,t;
+int a[N];
+vector<int> ans;
+
+void cra()
 {
-    int i = 0,j = 0;
-    while(i<t.length())
+    int i = 1,j = 0;
+    while(i<p.length())
     {
-        if(p[j]==t[i]){ i++; j++; }
-        if(j==p.length()){ ans.push_back(i-j); j = a[j-1]; }
-        else if(i<t.length() and p[j]!=t[i])
+        if(p[i]==p[j])
         {
-            if(j>0) j = a[j-1];
-            else i++;
+            a[i] = j+1;
+            i++;
+            j++;
+        }
+        else 
+        {
+            if(j==0){ a[i] = 0; i++; }
+            else j = a[j-1];
         }
     }
 }
 
-void crtable()
+void solve()
 {
-    int len = 0,i = 1;
-
-    a.resize(p.length());
-
-    while(i<p.length())
+    int i = 0,j = 0;
+    while(i<t.length())
     {
-        if(p[i]==p[len]){ len++; a[i] = len; i++; }
+        if(t[i]==p[j])
+        {
+            i++; j++;
+            if(j==p.length()){ ans.push_back(i-p.length()); j = a[j-1]; }
+        }
         else
         {
-            if(len>0) len = a[len-1];
-            else
-            {
-                a[i] = 0;
-                i++;
-            }
+            if(j>0) j = a[j-1];
+            else i++;
         }
     }
 }
@@ -46,10 +48,10 @@ int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0);
 
-    cin >> t >> p;
+    cin >> p >> t;
 
-    crtable();
-    kmp();
+    cra();
+    solve();
 
     for(int i = 0;i < ans.size();i++) cout << ans[i] << ' ';
 }
