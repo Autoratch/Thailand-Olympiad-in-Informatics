@@ -1,54 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define endl '\n'
-#define x first
-#define y second
 
-const int N = 1e5;
-
-int q,n,r,d;
-pair<double,double> s[N];
-vector<pair<double,double> > tmp;
-
-bool cmpx(pair<double,double> a,pair<double,double> b){ return a.x < b.x; }
-
-bool cmpy(pair<double,double> a,pair<double,double> b){ return a.y < b.y; }
-
-double dist(pair<double,double> a,pair<double,double> b){ return (double)sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)); }
-
-double solve(int l,int r)
-{
-    if(r-l+1<=3)
-    {
-        double mn = (double)INT_MAX;
-        for(int i = l;i <= r;i++) for(int j = i+1;j <= r;j++) mn = min(mn,dist(s[i],s[j]));
-        return mn;
-    }
-    int mid = (l+r)/2;
-    double ml = solve(l,mid);
-    double mr = solve(mid+1,r);
-    double mn = min(ml,mr);
-    tmp.resize(0);
-    for(int i = l;i < r;i++) if(abs(s[mid].x-s[i].x)<mn) tmp.push_back(s[i]);
-    sort(tmp.begin(),tmp.end(),cmpy);
-    for(int i = 0;i < tmp.size();i++) for(int j = i+1;j < tmp.size() and tmp[j].y-tmp[i].y < mn;j++) mn = min(mn,dist(tmp[i],tmp[j]));
-    return mn;
-}
+int t,n,x,y;
+vector<pair<double,double> > pts;
+set<pair<double,double> > s;
 
 int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0);
+    
+    cin >> t;
 
-    cin >> q;
-
-    while(q--)
+    while(t--)
     {
-        cin >> n >> r >> d;
-        for(int i = 0;i < n;i++) cin >> s[i].x >> s[i].y;
-        sort(s,s+n,cmpx);
-        double ans = solve(0,n-1);
-        if(ans<d+r+r) cout << 'N';
+        cin >> n >> x >> y;
+
+        pts.resize(n);
+        for(int i = 0;i < n;i++) cin >> pts[i].first >> pts[i].second;
+        sort(pts.begin(),pts.end());
+        s.clear();
+        
+        int j = 0;
+        double ans = 1e18;
+        for(int i = 0;i < n;i++)
+        {
+            double d = ceil(sqrt(ans));
+            while(pts[i].first-pts[j].first>=ans)
+            {
+                s.erase({pts[j].second,pts[j].first});
+                j++;
+            }
+            auto it1 = s.lower_bound({pts[i].second-d,pts[i].first});
+            auto it2 = s.upper_bound({pts[i].second+d,pts[i].first});
+            for(auto it = it1;it != it2;it++)
+            {
+                double dx = pts[i].first-it->second;
+                double dy = pts[i].second-it->first;
+                ans = min(ans,sqrt(dx*dx+dy*dy));
+            }
+            s.insert({pts[i].second,pts[i].first});
+        }
+        if(ans<x*2+y) cout << 'N';
         else cout << 'Y';
-        cout << endl;
+        cout << '\n';
     }
 }
