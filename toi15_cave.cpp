@@ -20,17 +20,10 @@ int main()
     {
         long long d=q.top().first; int now=q.top().second.first,hop=q.top().second.second;
         q.pop();
-
-        /*
-        for(auto t:dist[now]) if(hop>=t.second && d>=t.first) status=true;
-        if(status) continue;
-        */
-
         dist[now].push_back({d,hop});
         for(auto t:adj[now])
         {
-            int l=t.first,next=t.second;
-            bool status=false;
+            int l=t.first,next=t.second; bool status=false;
             for(auto n:dist[next]) if(hop>=n.second && d>=n.first) status=true;
             if(status==false) q.push({d+l,{next,hop+1}});
         }
@@ -45,22 +38,3 @@ int main()
         cout << ans << " ";
     }
 }
-/*
-8 0 7 14
-0 1 10
-0 3 14
-0 4 8
-1 2 2
-2 7 2
-2 3 4
-3 7 15
-3 4 9
-5 3 7
-5 7 2
-4 5 5
-4 6 1
-6 5 1
-6 4 3
-4
-0 10 2 30
-*/
