@@ -1,43 +1,24 @@
-#include <queue>
-#include <vector>
-#include <iostream>
-#include <deque>
+#include <bits/stdc++.h>
 using namespace std;
+
+int N,K,a,sum=0,last=INT_MIN,mx=0,length=0;
+deque<pair<int,int>> q;
 
 int main()
 {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-
-    int n,k;
-
-    cin >> n >> k;
-
-    vector<int> a(n+1);
-
-    for(int i = 1;i <= n;i++){ cin >> a[i]; a[i]+=a[i-1]; }
-
-    deque<pair<int,int> > q;
-
+    ios::sync_with_stdio(0); cin.tie(0);
+    cin >> N >> K;
     q.push_back({0,0});
-
-    int mx = 0,len = 0;
-
-    for(int i = 1;i <= n;i++)
+    for(int i=1;i<=N;i++)
     {
-        while(!q.empty())
-        {
-            if(i-q.front().second<=k){ break; }
-            q.pop_front();
-        }
-        if(a[i]-q.front().first>mx){ mx = a[i]-q.front().first; len = i-q.front().second; }
-        else if(mx==a[i]-q.front().first and len>i-q.front().second) len = i-q.front().second;
-        while(!q.empty())
-        {
-            if(q.back().first>=a[i]) q.pop_back();
-            else break;
-        }
-        q.push_back({a[i],i});
+        cin >> a;
+        sum+=a;
+        while(!q.empty()&&i-q.front().second>K) q.pop_front();
+        if(sum-q.front().first>mx){ mx=sum-q.front().first; length=i-q.front().second; }
+        else if(sum-q.front().first==mx && i-q.front().second<length) length=i-q.front().second;
+        while(!q.empty()&&q.back().first>=sum) q.pop_back();
+        q.push_back({sum,i});
     }
-
-    cout << mx << '\n' << len << '\n';
+    if(mx<=0) cout << "0\n0";
+    else cout << mx << "\n" << length;
 }
