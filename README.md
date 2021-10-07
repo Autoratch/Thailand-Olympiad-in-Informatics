@@ -2,6 +2,8 @@
 
 Welcome to TOI, This repo provides reader with many solutions for past Thailand Olympiad in Informatics problems
 
+Contributions welcomed: PR
+
 ## Contributors
 
 + Me (Autoratch)
