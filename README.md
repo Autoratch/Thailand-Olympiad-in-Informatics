@@ -11,3 +11,4 @@ Contributions welcomed: PR
 + [Itzmeowww](https://www.github.com/Itzmeowww)
 + [T0peerakarn](https://github.com/T0peerakarn)
 + [MasterIceZ](https://github.com/MasterIceZ)
++ [krit3379](https://github.com/krit3379)
